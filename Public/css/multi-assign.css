@@ -20,20 +20,23 @@
 }
 
 col.conv-multi-assignee {
-    width: 140px;
+    width: 210px;
 }
 
-th.conv-multi-assignee {
+.table.table-conversations th.conv-multi-assignee {
     font-size: 13px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-td.conv-multi-assignee {
-    max-width: 140px;
+.table.table-conversations tbody td.conv-multi-assignee {
+    max-width: 210px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     font-size: 13px;
     color: #888;
+    padding: 0 22px 0 13px;
 }
 
 .multi-assign-create-group .dropdown-toggle {
