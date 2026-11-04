@@ -1,7 +1,7 @@
 <div class="form-group">
     <label class="col-sm-2 control-label">{{ __('Additional Assignees') }}</label>
     <div class="col-sm-9">
-        <div class="btn-group multi-assign-create-group" id="multi-assign-create" data-max="{{ $maxAssignees }}">
+        <div class="btn-group multi-assign-create-group" id="multi-assign-create" data-max="{{ $maxAssignees }}" data-lang-none="{{ __('None') }}" data-lang-assignees="{{ __('assignees') }}" data-lang-max="{{ __('Maximum of :max additional assignees') }}">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="multi-assign-create-label">{{ __('None') }}</span>
                 <span class="caret"></span>

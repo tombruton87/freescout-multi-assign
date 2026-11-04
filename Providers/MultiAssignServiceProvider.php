@@ -28,7 +28,9 @@ class MultiAssignServiceProvider extends ServiceProvider
 
     public function register()
     {
-        //
+        // Register before any boot() call translates a string. Laravel caches
+        // the JSON catalogue on first use, so a path added in boot() is missed.
+        $this->loadJsonTranslationsFrom(__DIR__.'/../Resources/lang');
     }
 
     private static function showListColumn()

@@ -1,10 +1,22 @@
 (function() {
     var TRUNCATE_AT = 3;
 
-    function formatLabel(names) {
-        if (!names.length) return 'None';
+    function widgetLang(fromEl) {
+        var root = fromEl ? jQuery(fromEl).closest('#conv-multi-assignee, #multi-assign-create') : jQuery();
+        if (!root.length) {
+            root = jQuery('#conv-multi-assignee, #multi-assign-create').first();
+        }
+        return {
+            none: root.attr('data-lang-none') || 'None',
+            assignees: root.attr('data-lang-assignees') || 'assignees',
+            max: root.attr('data-lang-max') || 'Maximum of :max additional assignees'
+        };
+    }
+
+    function formatLabel(names, lang) {
+        if (!names.length) return lang.none;
         if (names.length <= TRUNCATE_AT) return names.join(', ');
-        return names.length + ' assignees';
+        return names.length + ' ' + lang.assignees;
     }
 
     // --- Conversation view: toggle via AJAX ---
@@ -37,7 +49,7 @@
                             icon.removeClass('glyphicon-check').addClass('glyphicon-unchecked');
                         }
                         var names = response.assignees.map(function(a) { return a.name; });
-                        var label = formatLabel(names);
+                        var label = formatLabel(names, widgetLang(dropdown));
                         jQuery('.multi-assign-label').text(label);
                         jQuery('#conv-multi-assignee').attr('data-original-title', response.label);
                     } else if (response.msg) {
@@ -68,8 +80,9 @@
                         jQuery('.multi-assign-dropdown .glyphicon-check')
                             .removeClass('glyphicon-check')
                             .addClass('glyphicon-unchecked');
-                        jQuery('.multi-assign-label').text('None');
-                        jQuery('#conv-multi-assignee').attr('data-original-title', 'None');
+                        var noneLabel = widgetLang(dropdown).none;
+                        jQuery('.multi-assign-label').text(noneLabel);
+                        jQuery('#conv-multi-assignee').attr('data-original-title', noneLabel);
                     } else if (response.msg) {
                         showFloatingAlert('error', response.msg);
                     }
@@ -99,7 +112,8 @@
                 if (maxAssignees > 0) {
                     var currentCount = jQuery('.multi-assign-create-dropdown .glyphicon-check').length;
                     if (currentCount >= maxAssignees) {
-                        showFloatingAlert('error', 'Maximum of ' + maxAssignees + ' additional assignees');
+                        var maxLabel = widgetLang(createDropdown).max.replace(':max', maxAssignees);
+                        showFloatingAlert('error', maxLabel);
                         return;
                     }
                 }
@@ -154,7 +168,7 @@
             }
         });
 
-        label.text(formatLabel(names));
+        label.text(formatLabel(names, widgetLang(createDropdown)));
 
         if (names.length) {
             jQuery('.multi-assign-clear-item, .multi-assign-clear-divider').show();

@@ -1,5 +1,5 @@
 <li>
-    <div class="btn-group" id="conv-multi-assignee" data-toggle="tooltip" data-max="{{ $maxAssignees }}" title="{{ __('Additional Assignees') }}: {{ count($assigneeIds) ? implode(', ', $users->whereIn('id', $assigneeIds)->pluck('first_name')->toArray()) : __('None') }}">
+    <div class="btn-group" id="conv-multi-assignee" data-toggle="tooltip" data-max="{{ $maxAssignees }}" data-lang-none="{{ __('None') }}" data-lang-assignees="{{ __('assignees') }}" title="{{ __('Additional Assignees') }}: {{ count($assigneeIds) ? implode(', ', $users->whereIn('id', $assigneeIds)->pluck('first_name')->toArray()) : __('None') }}">
         <button type="button" class="btn btn-default conv-info-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-title="{{ __('Additional Assignees') }}" aria-hidden="true">
             <i class="glyphicon glyphicon-user"></i><small class="glyphicon glyphicon-plus multi-assign-plus-icon"></small>
         </button>
